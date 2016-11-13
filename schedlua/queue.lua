@@ -94,15 +94,19 @@ end
 --  New Priority code
 
 local function comparePriority(task1, task2)
-	if task1.Priority < task2.Priority then
-		return true
-	end
-	
-	return false;
+	return task1.Priority < task2.Priority
 end
 
-function Queue:SortTasks(task)
-    tabutils.binsert(self, task, comparePriority)
+function Queue:sortTasks(value)
+	local last = self.last + 1;
+	self.last = last;
+	self[last] = value;
+
+	print("SortTasks", self:length())
+
+    tabutils.binsert(self, value, comparePriority)
 end
 
 return Queue;
+
+

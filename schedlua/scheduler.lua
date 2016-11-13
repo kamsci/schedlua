@@ -99,7 +99,8 @@ end
 -- The 'params' is a table of parameters which will be passed to the function
 -- when it's ready to run.
 function Scheduler.scheduleTask(self, task, params, priority)
-	--print("Scheduler.scheduleTask: ", task, params)
+	print("Scheduler.scheduleTask: ", task, params)
+
 	params = params or {}
 	
 	if not task then
@@ -115,12 +116,20 @@ function Scheduler.scheduleTask(self, task, params, priority)
 	-- 	    self.TasksReadyToRun:enqueue(priorityTable[i]);
     --     end
 	-- end
+	-- self.TasksReadyToRun:enqueue(task)
 
-    self.TasksReadyToRun:SortTasks(task);
+	if task.Priority == 0 then
+		self.TasksReadyToRun:pushFront(task);
+		print("P0")	
+	else
+		-- self.TasksReadyToRun:enqueue(task);
+    	self.TasksReadyToRun:sortTasks(task);
+		print("not P0")
+	end
 
 	task.state = "readytorun"
 
-    print(self.TasksReadyToRun:length())
+    -- print(self.TasksReadyToRun:length())
 
 	return task;
 end
@@ -144,7 +153,7 @@ function Scheduler.step(self)
 
 	-- If no fiber in ready queue, then just return
 	if task == nil then
-		--print("Scheduler.step: NO TASK")
+		-- print("Scheduler.step: NO TASK")
 		return true
 	end
 

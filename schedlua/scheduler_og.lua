@@ -99,7 +99,7 @@ end
 -- The 'params' is a table of parameters which will be passed to the function
 -- when it's ready to run.
 function Scheduler.scheduleTask(self, task, params, priority)
-	--print("Scheduler.scheduleTask: ", task, params)
+	print("Scheduler.scheduleTask: ", task, params)
 	params = params or {}
 	
 	if not task then
@@ -109,8 +109,10 @@ function Scheduler.scheduleTask(self, task, params, priority)
 	task:setParams(params);
 	
 	if task.Priority == 0 then
+		print("P0")
 		self.TasksReadyToRun:pushFront(task);	
 	else
+		print("not P0")
 		self.TasksReadyToRun:enqueue(task);	
 	end
 
