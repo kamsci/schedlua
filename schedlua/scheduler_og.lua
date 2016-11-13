@@ -1,9 +1,8 @@
 
 local ffi = require("ffi");
 
-local Queue = require("schedlua.queue")
+local Queue = require("schedlua.queue_og")
 local Task = require("schedlua.task");
-local tabutils = require("schedlua.tabutils")
 
 
 --[[
@@ -58,6 +57,7 @@ local Scheduler_mt = {
 	__index = Scheduler,
 }
 
+
 function Scheduler.init(self, ...)
 	local obj = {
 		TasksReadyToRun = Queue();
@@ -108,19 +108,13 @@ function Scheduler.scheduleTask(self, task, params, priority)
 
 	task:setParams(params);
 	
-	-- if task.Priority == 0 then
-	-- 	self.TasksReadyToRun:pushFront(task);	
-	-- else
-    --     for i = 0, #priorityTable do
-	-- 	    self.TasksReadyToRun:enqueue(priorityTable[i]);
-    --     end
-	-- end
-
-    self.TasksReadyToRun:SortTasks(task);
+	if task.Priority == 0 then
+		self.TasksReadyToRun:pushFront(task);	
+	else
+		self.TasksReadyToRun:enqueue(task);	
+	end
 
 	task.state = "readytorun"
-
-    print(self.TasksReadyToRun:length())
 
 	return task;
 end

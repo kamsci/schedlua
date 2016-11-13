@@ -1,9 +1,6 @@
 --[[
 	Queue
 --]]
-
-local tabutils = require("schedlua.tabutils")
-
 local Queue = {}
 setmetatable(Queue, {
 	__call = function(self, ...)
@@ -91,18 +88,5 @@ function Queue:Entries(func, param)
 	return closure;
 end
 
---  New Priority code
-
-local function comparePriority(task1, task2)
-	if task1.Priority < task2.Priority then
-		return true
-	end
-	
-	return false;
-end
-
-function Queue:SortTasks(task)
-    tabutils.binsert(self, task, comparePriority)
-end
 
 return Queue;

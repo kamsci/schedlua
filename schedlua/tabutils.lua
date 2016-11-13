@@ -61,13 +61,21 @@ local function getIndex(t, value, fcomp)
    return (iMid+iState);
 end
 
-local function binsert(tbl, value, fcomp)
+function binsert(tbl, value, fcomp)
    local idx = getIndex(tbl, value, fcomp);
    insert( tbl, idx, value);
    
    return idx;
 end
 
+-- local function pcomp()
+
+-- local function binsertP(tbl, value, fcomp)
+--    local idx = getIndex(tbl, value, fcomp);
+--    insert( tbl, idx, value);
+   
+--    return idx;
+-- end
 
 return {
    getIndex = getIndex,
